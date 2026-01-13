@@ -37,6 +37,7 @@ body, html {
   margin-bottom: 20px;
   animation: splashScale 2.5s ease-in-out forwards, glow 2s infinite alternate;
 }
+.splash-logo, .hero-logo { object-fit: cover; display: block; border-radius: 18px; background: linear-gradient(135deg,#4b0082,#ffb74d); }
 @keyframes splashScale {
   0% { transform: scale(0.5); opacity: 0; }
   50% { transform: scale(1.2); opacity: 1; }
@@ -220,7 +221,7 @@ footer a.btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,25
 <body>
 
 <div class="splash" id="splash">
-  <img src="krishna.png" alt="JapaCounter Pro Logo" class="splash-logo">
+  <img src="krishna.png" alt="JapaCounter Pro Logo" class="splash-logo" width="160" height="160" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect width=%27100%25%27 height=%27100%25%27 fill=%27%234b0082%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27Montserrat,sans-serif%27 font-size=%2748%27 fill=%27%23ffd54f%27>JC</text></svg>'">
   <h1>JapaCounter Pro</h1>
 </div>
 
@@ -231,7 +232,7 @@ footer a.btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,25
   <canvas id="particleCanvas"></canvas>
   <div class="hero-content" data-aos="fade-up">
     <div class="hero-card">
-      <img src="krishna.png" alt="JapaCounter Pro" class="hero-logo">
+      <img src="krishna.png" alt="JapaCounter Pro" class="hero-logo" width="140" height="140" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect width=%27100%25%27 height=%27100%25%27 fill=%27%234b0082%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27Montserrat,sans-serif%27 font-size=%2748%27 fill=%27%23ffd54f%27>JC</text></svg>'">
       <h1 class="hero-title">JapaCounter Pro</h1>
       <p class="hero-subtitle">
         A devotional Android app that helps you stay consistent with your mantra
