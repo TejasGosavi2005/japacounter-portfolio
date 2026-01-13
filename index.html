@@ -4,24 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JapaCounter Pro – Devotional Japa Tracking App</title>
+<meta name="description" content="Digital Japa Counter app with voice tracking and devotional features.">
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
+<link rel="preload" as="image" href="krishna.png"> 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+:root {
+  --primary-saffron: #FF9933;
+  --deep-saffron: #D84315;
+  --royal-purple: #311B92;
+  --gold-accent: #FFD700;
+  --off-white: #F9F9F9;
+}
+
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
   overflow-x: hidden;
+  background-color: var(--off-white);
 }
+
+/* --- SPLASH SCREEN (Optimized for Speed) --- */
 .splash {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #4b0082, #ffb74d);
+  background: radial-gradient(circle at center, #5e35b1, #28084f);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -29,47 +40,39 @@ body, html {
   align-items: center;
   z-index: 9999;
   text-align: center;
-  transition: opacity 1s ease, transform 1s ease;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Faster transition */
 }
+
 .splash-logo {
   width: 160px;
   height: 160px;
   margin-bottom: 20px;
-  animation: splashScale 2.5s ease-in-out forwards, glow 2s infinite alternate;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  animation: splashPulse 2s infinite alternate;
+  border: 4px solid rgba(255, 255, 255, 0.1);
 }
-.splash-logo, .hero-logo { object-fit: cover; display: block; border-radius: 18px; background: linear-gradient(135deg,#4b0082,#ffb74d); }
-@keyframes splashScale {
-  0% { transform: scale(0.5); opacity: 0; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+
+@keyframes splashPulse {
+  0% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 153, 51, 0.4); }
+  100% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
 }
-@keyframes glow {
-  0% { filter: drop-shadow(0 0 15px #fff); }
-  100% { filter: drop-shadow(0 0 35px #fff); }
-}
+
 .splash h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  margin: 0;
-  background: linear-gradient(90deg,#fff,#ffe0b2,#ffd54f,#fff);
-  background-size: 200% 100%;
+  background: linear-gradient(to right, #FFD700, #FF9933, #FFD700);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 2.2s infinite linear;
-  opacity: 0;
-  animation-delay: 0.6s;
-  animation-fill-mode: forwards;
-  letter-spacing: 0.6px;
+  background-size: 200% auto;
+  margin-top: 15px;
 }
-@keyframes shine {
-  0%{background-position:-200%} 
-  100%{background-position:200%}
-}
-.splash.fade-out {
-  opacity: 0;
-  transform: translateY(-50px);
-  pointer-events: none;
-}
+
+/* Class to hide splash */
+.splash.fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
+
+/* --- HERO SECTION --- */
 .hero {
   position: relative;
   height: 100vh;
@@ -81,379 +84,386 @@ body, html {
   text-align: center;
   overflow: hidden;
 }
+
 .hero video {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-  filter: brightness(0.4);
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 1;
+  filter: brightness(0.4) saturate(1.2);
 }
+
 #particleCanvas {
-  position: absolute;
-  top:0; left:0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2; pointer-events: none;
 }
+
 .hero-content {
-  position: relative;
-  z-index: 3;
-  opacity: 0;
-  animation: fadeUp 2s ease forwards;
+  position: relative; z-index: 3;
+  width: 100%;
+  padding: 0 20px;
+  display: flex; 
+  justify-content: center;
 }
+
+/* Glassmorphism Card for Hero */
+.hero-card {
+  /* CHANGED: Made background whiter so black text is visible */
+  background: rgba(255, 255, 255, 0.75); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 700px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
 .hero-logo {
-  width: 140px;
-  height: 140px;
-  margin-bottom: 25px;
-  animation: float 3s ease-in-out infinite, scaleLogo 2s ease forwards;
-  filter: drop-shadow(0 0 35px #ff9800);
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 25px auto;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  box-shadow: 0 10px 30px rgba(237, 219, 219, 0.2);
+  border: 4px solid var(--primary-saffron); /* Changed border to match theme */
+  animation: floatLogo 4s ease-in-out infinite;
+  display: block;
 }
-@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-@keyframes fadeUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-@keyframes scaleLogo {
-  0% { transform: scale(0.7); opacity: 0; }
-  50% { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
+
 .hero-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
-  margin-bottom: 20px;
-  background: linear-gradient(90deg,#ffd54f,#ffb74d,#ff9800);
+  margin-bottom: 15px;
+  /* Darker gradient for visibility on white glass */
+  background: linear-gradient(135deg, #D84315 0%, #FF9933 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0,0,0,0.65);
-  animation: slideIn 1.2s ease forwards;
-  opacity: 0;
+  text-shadow: none;
 }
+
+/* CHANGED: Subtitle is now Black as requested */
 .hero-subtitle {
-  font-size: 1.25rem;
-  color: #ffe0b2;
-  line-height: 1.8;
-  margin-bottom: 35px;
-  text-shadow: 0 0 10px rgba(0,0,0,0.6);
-  animation: slideIn 2s ease forwards;
-  animation-delay: 0.5s;
-  opacity: 0;
+  font-size: 1.3rem;
+  color: #000000; /* PURE BLACK */
+  line-height: 1.6;
+  font-weight: 700; /* Bolder to stand out */
+  max-width: 90%;
 }
-@keyframes slideIn {
-  0% { opacity: 0; transform: translateY(25px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+
+/* Scroll Arrow */
 .scroll-down {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
+  position: absolute; bottom: 30px; left: 50%;
   transform: translateX(-50%);
+  color: var(--gold-accent);
   font-size: 2.5rem;
-  color: #ffcc80;
-  animation: bounceFade 2s infinite;
-  cursor: pointer;
-  z-index: 4;
+  animation: bounce 2s infinite;
+  cursor: pointer; z-index: 4;
 }
-@keyframes bounceFade {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(20px); opacity: 0.6; }
+@keyframes bounce { 0%,20%,50%,80%,100%{transform:translate(-50%,0)} 40%{transform:translate(-50%,-15px)} 60%{transform:translate(-50%,-8px)} }
+
+/* --- SECTIONS --- */
+section { padding: 90px 20px; }
+
+.section-title {
+  text-align: center; margin-bottom: 60px;
+  font-size: 2.5rem; font-weight: 700;
+  color: #2c2c2c;
+  position: relative;
+  display: inline-block;
+  left: 50%; transform: translateX(-50%);
 }
-.hero-card {
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(20px);
-  border-radius: 25px;
-  padding: 50px 40px;
-  text-align: center;
-  max-width: 650px;
-  margin: 0 auto;
-  animation: fadeUp 1.8s ease forwards;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.2);
+.section-title::after {
+  content: ''; display: block; width: 60px; height: 4px;
+  background: var(--primary-saffron);
+  margin: 15px auto 0; border-radius: 2px;
 }
-section { padding: 80px 20px; }
-.section-title { text-align: center; margin-bottom: 60px; font-size: 2.5rem; font-weight: 700; color: #4e342e; }
-.features, .uses, .how-it-works { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+
+/* CARDS DESIGN */
+.features, .uses, .how-it-works {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+}
 
 .card {
   background: #fff;
-  border-radius: 15px;
-  padding: 30px;
-  width: 300px;
+  border: none;
+  border-radius: 20px;
+  padding: 35px 25px;
+  width: 320px;
   text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-  transition: transform 0.5s ease, box-shadow 0.5s ease, background 0.3s ease;
-  perspective: 1000px;
-  opacity: 0;
+  box-shadow: 0 10px 30px rgba(234, 234, 234, 0.05);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
+
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+  background: linear-gradient(90deg, var(--primary-saffron), var(--deep-saffron));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+}
+
 .card:hover {
-  transform: translateY(-15px) scale(1.05) rotateY(5deg);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.25);
-  background: #fffaf3;
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
 }
-.card img { width: 80px; margin-bottom: 20px; }
-.card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #ff9800; }
-.card p { font-size: 1rem; color: #555; }
-@media (max-width: 768px) {
-  .features .card,
-  .uses .card,
-  .how-it-works .card {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-  }
+.card:hover::before { transform: scaleX(1); }
+
+.card img {
+  width: 70px; height: 70px; margin-bottom: 20px;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
 }
-@media (max-width: 480px) {
-  .features .card,
-  .uses .card,
-  .how-it-works .card {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
+
+.card h3 {
+  font-size: 1.4rem; font-weight: 700; margin-bottom: 12px;
+  color: #333;
 }
-footer { background: linear-gradient(90deg,#4b0082,#2e0854); color: #fff; text-align: center; padding: 40px 20px; }
-footer a.btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
+.card p { font-size: 0.95rem; color: #666; line-height: 1.6; }
+
+/* Section Colors */
+.bg-light-saffron { background: #FFF8E1; }
+.bg-white { background: #fff; }
+
+/* Download Button */
+.btn-download {
+  background: linear-gradient(45deg, var(--deep-saffron), var(--primary-saffron));
+  color: white; border: none;
+  padding: 12px 35px; font-weight: 700; letter-spacing: 0.5px;
+  border-radius: 50px;
+  box-shadow: 0 10px 20px rgba(255, 153, 51, 0.4);
+  transition: transform 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+}
+.btn-download:hover {
+  transform: scale(1.05); color: #fff;
+  box-shadow: 0 15px 30px rgba(255, 153, 51, 0.6);
+}
+
+/* --- FOOTER --- */
+footer {
+  background: linear-gradient(135deg, #2c0545, #1a022b);
+  color: #ccc;
+  text-align: center;
+  padding: 50px 20px;
+  border-top: 4px solid var(--gold-accent);
+}
+footer b { color: #fff; }
+
 @media(max-width:768px){
-  .hero h1{font-size:2.5rem;}
-  .hero p{font-size:1rem;}
+  .hero-title{font-size:2.2rem;}
+  .hero-card{padding: 40px 20px; background: rgba(255, 255, 255, 0.85); }
+  .splash-logo { width: 120px; height: 120px; }
+  .hero-logo { width: 110px; height: 110px; }
 }
 </style>
 </head>
 <body>
 
 <div class="splash" id="splash">
-  <img src="krishna.png" alt="JapaCounter Pro Logo" class="splash-logo" width="160" height="160" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect width=%27100%25%27 height=%27100%25%27 fill=%27%234b0082%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27Montserrat,sans-serif%27 font-size=%2748%27 fill=%27%23ffd54f%27>JC</text></svg>'">
+  <img src="krishna.png" alt="JapaCounter Pro" class="splash-logo" 
+       onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><circle cx=%27100%27 cy=%27100%27 r=%2790%27 fill=%27%23FF9933%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27sans-serif%27 font-size=%2750%27 fill=%27white%27>JC</text></svg>'">
   <h1>JapaCounter Pro</h1>
+  <p style="opacity: 0.8; font-size: 0.9rem; margin-top: 5px;">Your Digital Japmala</p>
 </div>
 
 <section class="hero" id="hero">
-  <video autoplay muted loop playsinline>
+  <video autoplay muted loop playsinline poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
     <source src="https://videos.pexels.com/video-files/854149/854149-hd_1280_720_25fps.mp4" type="video/mp4">
   </video>
+  
   <canvas id="particleCanvas"></canvas>
-  <div class="hero-content" data-aos="fade-up">
+
+  <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
     <div class="hero-card">
-      <img src="krishna.png" alt="JapaCounter Pro" class="hero-logo" width="140" height="140" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><rect width=%27100%25%27 height=%27100%25%27 fill=%27%234b0082%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27Montserrat,sans-serif%27 font-size=%2748%27 fill=%27%23ffd54f%27>JC</text></svg>'">
+      <img src="krishna.png" alt="JapaCounter Pro" class="hero-logo" 
+           loading="eager"
+           onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27><circle cx=%27100%27 cy=%27100%27 r=%27100%27 fill=%27%23FF9933%27/><text x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 font-family=%27sans-serif%27 font-size=%2760%27 fill=%27white%27>JC</text></svg>'">
+      
       <h1 class="hero-title">JapaCounter Pro</h1>
       <p class="hero-subtitle">
-        A devotional Android app that helps you stay consistent with your mantra
-        chanting – with custom mantras, voice-based japa counting, streaks and
-        gentle reminders.
+        Elevate your spiritual journey with voice-enabled counting, streak tracking, and daily reminders.
       </p>
     </div>
   </div>
   <div class="scroll-down" onclick="scrollToNext()">&#8595;</div>
 </section>
 
-<section>
+<section class="bg-white">
   <h2 class="section-title" data-aos="fade-up">Who Can Use JapaCounter Pro?</h2>
   <div class="uses">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-      <img src="https://img.icons8.com/ios/100/meditation-guru.png" alt="Daily Sadhana">
-      <h3>Daily Sadhana Practitioners</h3>
-      <p>Track your daily naam japa without losing focus, just like using a digital japmala.</p>
+    <div class="card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://img.icons8.com/color/100/meditation-guru.png" alt="Sadhana" loading="lazy">
+      <h3>Daily Sadhana</h3>
+      <p>Perfect for serious practitioners who want to track their daily naam japa with precision.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      <img src="https://img.icons8.com/ios/100/student-center.png" alt="Students & Professionals">
-      <h3>Students & Professionals</h3>
-      <p>Busy schedule? Use reminders and streaks to keep your chanting regular even on hectic days.</p>
+    <div class="card" data-aos="fade-up" data-aos-delay="200">
+      <img src="https://img.icons8.com/color/100/student-center.png" alt="Students" loading="lazy">
+      <h3>Busy Professionals</h3>
+      <p>Maintain your spiritual connection even on hectic days with quick sessions and reminders.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      <img src="https://img.icons8.com/ios/100/groups.png" alt="Group Japa">
-      <h3>Group / Family Japa</h3>
-      <p>Use one device to keep a shared count during satsang, bhajans or family japa sessions.</p>
-    </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-      <img src="https://img.icons8.com/ios/100/lotus.png" alt="Beginners">
-      <h3>New to Mantra Chanting</h3>
-      <p>Start small, chant with intention, and slowly build your habit with simple, visual tracking.</p>
+    <div class="card" data-aos="fade-up" data-aos-delay="300">
+      <img src="https://img.icons8.com/color/100/lotus.png" alt="Beginners" loading="lazy">
+      <h3>Beginners</h3>
+      <p>Start your journey with a simple, motivating tool that helps you build a chanting habit.</p>
     </div>
   </div>
 </section>
 
-<section style="background: #fff3e0;">
-  <h2 class="section-title" data-aos="fade-up">Key Features of the App</h2>
+<section class="bg-light-saffron">
+  <h2 class="section-title" data-aos="fade-up">Key Features</h2>
   <div class="features">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-      <img src="https://img.icons8.com/ios/100/edit--v1.png" alt="Mantra Input">
-      <h3>Custom Mantra Input</h3>
-      <p>
-        You can type and save your own mantra in English or any language of your choice.
-        The app remembers your mantra so you can continue your japa anytime.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://img.icons8.com/fluency/100/edit-text-file.png" alt="Custom Mantra" loading="lazy">
+      <h3>Custom Mantra</h3>
+      <p>Type and save your own mantra in Marathi, Hindi, or English. The app remembers it for you.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      <img src="https://img.icons8.com/ios/100/microphone.png" alt="Voice Japa">
-      <h3>Voice Japa Counting</h3>
-      <p>
-        Speak your mantra and let the app listen. Whenever your mantra is detected,
-        the counter automatically increases – perfect for hands-free chanting.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="200">
+      <img src="https://img.icons8.com/fluency/100/microphone.png" alt="Voice Japa" loading="lazy">
+      <h3>Voice Counting</h3>
+      <p>Chant hands-free! The app listens to your voice and automatically increments the counter.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-      <img src="https://img.icons8.com/ios/100/alarm.png" alt="Daily Reminder">
-      <h3>Daily Reminder Notifications</h3>
-      <p>
-        Set gentle notifications so you never forget your japa. Morning, evening
-        or any time that fits your personal routine.
-      </p>
-    </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-      <img src="https://img.icons8.com/ios/100/activity-history.png" alt="Streak">
-      <h3>Streak & Progress Tracking</h3>
-      <p>
-        JapaCounter Pro maintains your daily streak and total count, so you can
-        see how consistent your sadhana has been over time.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="300">
+      <img src="https://img.icons8.com/fluency/100/alarm-clock.png" alt="Reminders" loading="lazy">
+      <h3>Daily Reminders</h3>
+      <p>Set gentle notifications for Brahma Muhurta or evening prayers so you never miss a session.</p>
     </div>
   </div>
 </section>
 
-<section>
-  <h2 class="section-title" data-aos="fade-up">How the App Works</h2>
+<section class="bg-white">
+  <h2 class="section-title" data-aos="fade-up">How It Works</h2>
   <div class="how-it-works">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-      <img src="https://img.icons8.com/ios/100/add.png" alt="Set Mantra">
-      <h3>1. Set Your Mantra</h3>
-      <p>
-        Open the app, type your preferred mantra (for example “Hare Krishna”,
-        “Om Namah Shivaya”) and save it as your current mantra.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="100">
+      <img src="https://img.icons8.com/dusk/100/add-property.png" alt="Step 1" loading="lazy">
+      <h3>1. Set Mantra</h3>
+      <p>Enter your favorite mantra (e.g., "Hare Krishna") to personalize your counter.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      <img src="https://img.icons8.com/ios/100/fingerprint-scan.png" alt="Start Japa">
-      <h3>2. Start Japa – Tap or Voice</h3>
-      <p>
-        Use Tap to Count for simple digital mala experience or turn on Voice
-        Japa mode so that chanting aloud automatically increases your count.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="200">
+      <img src="https://img.icons8.com/dusk/100/tap.png" alt="Step 2" loading="lazy">
+      <h3>2. Start Chanting</h3>
+      <p>Use the Tap mode for manual counting or Voice mode for automatic detection.</p>
     </div>
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-      <img src="https://img.icons8.com/ios/100/combo-chart.png" alt="Track Progress">
-      <h3>3. Track Your Progress</h3>
-      <p>
-        Check your total japa, daily streak and notifications. Over days and
-        weeks, you can see how your discipline and devotion are growing.
-      </p>
+    <div class="card" data-aos="fade-up" data-aos-delay="300">
+      <img src="https://img.icons8.com/dusk/100/growth.png" alt="Step 3" loading="lazy">
+      <h3>3. View Progress</h3>
+      <p>Check your streaks and total count stats to stay motivated on your path.</p>
     </div>
   </div>
 </section>
 
-<section style="background: #fff8e1;">
-  <h2 class="section-title" data-aos="fade-up">Get the JapaCounter Pro App</h2>
+<section style="background: linear-gradient(180deg, #FFF8E1 0%, #FFE0B2 100%);">
+  <h2 class="section-title" data-aos="fade-up">Start Your Journey</h2>
   <div class="features" style="justify-content: center;">
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" style="max-width:400px;">
-      <img src="https://img.icons8.com/ios/100/download--v1.png" alt="Download App" style="width:70px;margin-bottom:20px;">
-      <h3>Download APK</h3>
+    <div class="card" data-aos="zoom-in" style="max-width: 450px; border: 2px solid #FFD700;">
+      <img src="https://img.icons8.com/fluency/100/android-os.png" alt="Android" style="width:80px; margin-bottom:10px;" loading="lazy">
+      <h3 style="color: var(--deep-saffron);">Download App</h3>
       <p>
-        Install the JapaCounter Pro app on your Android device and carry your
-        japmala in your pocket – anywhere, anytime. Enjoy a polished UI, voice
-        japa support and streak tracking.
+        Experience the power of disciplined chanting. Install JapaCounter Pro on your Android device today.
       </p>
-      <a href="" class="btn btn-warning" style="margin-top:15px;background:linear-gradient(90deg,#ffd54f,#ff9800); border:none;">Download APK</a>
-      <p style="margin-top:15px; font-size:0.9rem; color:#555;">
-        Play Store version coming soon.
+      <a href="#" class="btn-download">Download APK</a>
+      <p style="margin-top:15px; font-size:0.85rem; color:#888;">
+        Version 1.0 | Compatible with Android 8+
       </p>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>&copy;<b>2025 JapaCounter Pro. Designed &amp; developed by Tejas Santosh Gosavi.</b></p>
-
-  <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
-
-    <a href="https://github.com/TejasGosavi2005" 
-       target="_blank" 
-       class="btn btn-dark" 
-       style="padding:10px 20px; border-radius:8px;">
-       GitHub Profile
-    </a>
-
-    <a href="https://www.linkedin.com/in/tejas-gosavi-914b722b3?utm_source=share_via&utm_content=profile&utm_medium=member_android" 
-       target="_blank" 
-       class="btn btn-primary" 
-       style="padding:10px 20px; border-radius:8px;">
-       LinkedIn Profile
-    </a>
-
+  <p>&copy; 2025 <b>JapaCounter Pro</b>. Designed with devotion by <b>Tejas Santosh Gosavi</b>.</p>
+  
+  <div style="margin-top: 25px; display: flex; justify-content: center; gap: 20px;">
+    <a href="https://github.com/TejasGosavi2005" target="_blank" class="btn btn-outline-light btn-sm">GitHub</a>
+    <a href="https://www.linkedin.com/in/tejas-gosavi-914b722b3" target="_blank" class="btn btn-outline-light btn-sm">LinkedIn</a>
   </div>
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-AOS.init({ duration: 1200 });
+  // Initialize Animations
+  AOS.init({ duration: 1000, once: true });
 
-setTimeout(() => {
-  document.getElementById('splash').classList.add('fade-out');
-  document.querySelector('.hero-content').style.opacity = 1;
-}, 3000);
+  // SPLASH SCREEN LOGIC - FASTER LOADING
+  // Changed from fixed 2.5s timer to load event listener
+  window.addEventListener('load', () => {
+    // Only a tiny delay to ensure smooth transition, feels much faster
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('fade-out');
+    }, 500); 
+  });
 
-function scrollToNext() {
-  window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-}
-
-const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-const particleCount = 120;
-const mouse = { x:null, y:null };
-window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
-function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-window.addEventListener('resize',resizeCanvas); resizeCanvas();
-
-class Particle{
-  constructor(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.size=Math.random()*3+1;
-    this.speedX=(Math.random()-0.5)*1.5;
-    this.speedY=(Math.random()-0.5)*1.5;
-    this.alpha=Math.random()*0.5+0.3;
+  function scrollToNext() {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
   }
-  update(){
-    this.x+=this.speedX;
-    this.y+=this.speedY;
-    if(this.x>canvas.width)this.x=0;
-    if(this.x<0)this.x=canvas.width;
-    if(this.y>canvas.height)this.y=0;
-    if(this.y<0)this.y=canvas.height;
-    if(mouse.x && mouse.y){
-      let dx=this.x-mouse.x;
-      let dy=this.y-mouse.y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<100){ this.x+=dx/20; this.y+=dy/20; }
+
+  // Particle Animation (Optimized)
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const particleCount = 60; // Reduced from 100 to 60 for better performance on mobile
+  
+  function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+  window.addEventListener('resize',resizeCanvas); resizeCanvas();
+
+  class Particle{
+    constructor(){
+      this.x=Math.random()*canvas.width;
+      this.y=Math.random()*canvas.height;
+      this.size=Math.random()*3+1;
+      this.speedX=(Math.random()-0.5)*0.8; // Slowed down slightly for calmer vibe
+      this.speedY=(Math.random()-0.5)*0.8;
+      this.alpha=Math.random()*0.5+0.2;
+    }
+    update(){
+      this.x+=this.speedX;
+      this.y+=this.speedY;
+      if(this.x>canvas.width)this.x=0;
+      if(this.x<0)this.x=canvas.width;
+      if(this.y>canvas.height)this.y=0;
+      if(this.y<0)this.y=canvas.height;
+    }
+    draw(){
+      ctx.fillStyle=`rgba(255, 215, 0, ${this.alpha})`;
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fill();
     }
   }
-  draw(){
-    ctx.fillStyle=`rgba(255,255,255,${this.alpha})`;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fill();
-  }
-}
-for(let i=0;i<particleCount;i++) particles.push(new Particle());
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{p.update();p.draw();});
-  for(let i=0;i<particleCount;i++){
-    for(let j=i;j<particleCount;j++){
-      let dx=particles[i].x-particles[j].x;
-      let dy=particles[i].y-particles[j].y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){
-        ctx.strokeStyle=`rgba(255,152,0,${1-dist/120})`;
-        ctx.lineWidth=1;
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x,particles[i].y);
-        ctx.lineTo(particles[j].x,particles[j].y);
-        ctx.stroke();
+  
+  for(let i=0;i<particleCount;i++) particles.push(new Particle());
+  
+  function animateParticles(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{p.update();p.draw();});
+    // Connect particles
+    for(let i=0;i<particleCount;i++){
+      for(let j=i;j<particleCount;j++){
+        let dx=particles[i].x-particles[j].x;
+        let dy=particles[i].y-particles[j].y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<100){
+          ctx.strokeStyle=`rgba(255, 153, 51, ${1-dist/100})`; 
+          ctx.lineWidth=0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
       }
     }
+    requestAnimationFrame(animateParticles);
   }
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
+  animateParticles();
 </script>
 </body>
 </html>
-
