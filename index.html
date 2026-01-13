@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Japa Counter – Devotional Japa Tracking App</title>
+<title>JapaCounter Pro – Devotional Japa Tracking App</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
@@ -21,7 +21,7 @@ body, html {
 .splash {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #ff9800, #ffb74d);
+  background: linear-gradient(135deg, #4b0082, #ffb74d);
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -48,15 +48,17 @@ body, html {
 }
 .splash h1 {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
-  background: linear-gradient(90deg,#fff,#ffe0b2,#fff);
+  background: linear-gradient(90deg,#fff,#ffe0b2,#ffd54f,#fff);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 2s infinite linear;
+  animation: shine 2.2s infinite linear;
   opacity: 0;
-  animation-delay: 0.8s;
+  animation-delay: 0.6s;
   animation-fill-mode: forwards;
+  letter-spacing: 0.6px;
 }
 @keyframes shine {
   0%{background-position:-200%} 
@@ -120,9 +122,11 @@ body, html {
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 20px;
-  color: #ffb74d;
-  text-shadow: 0 0 20px rgba(0,0,0,0.7);
-  animation: slideIn 1.5s ease forwards;
+  background: linear-gradient(90deg,#ffd54f,#ffb74d,#ff9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(0,0,0,0.65);
+  animation: slideIn 1.2s ease forwards;
   opacity: 0;
 }
 .hero-subtitle {
@@ -205,7 +209,8 @@ section { padding: 80px 20px; }
     max-width: 100%;
   }
 }
-footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20px; }
+footer { background: linear-gradient(90deg,#4b0082,#2e0854); color: #fff; text-align: center; padding: 40px 20px; }
+footer a.btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
 @media(max-width:768px){
   .hero h1{font-size:2.5rem;}
   .hero p{font-size:1rem;}
@@ -215,8 +220,8 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
 <body>
 
 <div class="splash" id="splash">
-  <img src="krishna.jpg" alt="Japa Counter Logo" class="splash-logo">
-  <h1>Japa Counter</h1>
+  <img src="krishna.png" alt="JapaCounter Pro Logo" class="splash-logo">
+  <h1>JapaCounter Pro</h1>
 </div>
 
 <section class="hero" id="hero">
@@ -226,8 +231,8 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
   <canvas id="particleCanvas"></canvas>
   <div class="hero-content" data-aos="fade-up">
     <div class="hero-card">
-      <img src="krishna.jpg" alt="Japa Counter" class="hero-logo">
-      <h1 class="hero-title">Japa Counter</h1>
+      <img src="krishna.png" alt="JapaCounter Pro" class="hero-logo">
+      <h1 class="hero-title">JapaCounter Pro</h1>
       <p class="hero-subtitle">
         A devotional Android app that helps you stay consistent with your mantra
         chanting – with custom mantras, voice-based japa counting, streaks and
@@ -239,7 +244,7 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
 </section>
 
 <section>
-  <h2 class="section-title" data-aos="fade-up">Who Can Use Japa Counter?</h2>
+  <h2 class="section-title" data-aos="fade-up">Who Can Use JapaCounter Pro?</h2>
   <div class="uses">
     <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
       <img src="https://img.icons8.com/ios/100/meditation-guru.png" alt="Daily Sadhana">
@@ -295,7 +300,7 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
       <img src="https://img.icons8.com/ios/100/activity-history.png" alt="Streak">
       <h3>Streak & Progress Tracking</h3>
       <p>
-        Japa Counter maintains your daily streak and total count, so you can
+        JapaCounter Pro maintains your daily streak and total count, so you can
         see how consistent your sadhana has been over time.
       </p>
     </div>
@@ -333,16 +338,17 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
 </section>
 
 <section style="background: #fff8e1;">
-  <h2 class="section-title" data-aos="fade-up">Get the  Japa Counter App</h2>
+  <h2 class="section-title" data-aos="fade-up">Get the JapaCounter Pro App</h2>
   <div class="features" style="justify-content: center;">
     <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" style="max-width:400px;">
       <img src="https://img.icons8.com/ios/100/download--v1.png" alt="Download App" style="width:70px;margin-bottom:20px;">
       <h3>Download APK</h3>
       <p>
-        Install the  Japa Counter app on your Android device and carry your
-        japmala in your pocket – anywhere, anytime.
+        Install the JapaCounter Pro app on your Android device and carry your
+        japmala in your pocket – anywhere, anytime. Enjoy a polished UI, voice
+        japa support and streak tracking.
       </p>
-      <a href="" class="btn btn-warning" style="margin-top:15px;">Download APK</a>
+      <a href="" class="btn btn-warning" style="margin-top:15px;background:linear-gradient(90deg,#ffd54f,#ff9800); border:none;">Download APK</a>
       <p style="margin-top:15px; font-size:0.9rem; color:#555;">
         Play Store version coming soon.
       </p>
@@ -351,7 +357,7 @@ footer { background: #ff9800; color: #fff; text-align: center; padding: 40px 20p
 </section>
 
 <footer>
-  <p>&copy;<b>2025 Japa Counter. Designed &amp; developed by Tejas Santosh Gosavi.</b></p>
+  <p>&copy;<b>2025 JapaCounter Pro. Designed &amp; developed by Tejas Santosh Gosavi.</b></p>
 
   <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
 
